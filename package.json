@@ -1,0 +1,15 @@
+{
+  "name": "paint",
+  "version": "1.0.0",
+  "description": "A simple socket.io colaborative drawing app.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Russell Gilmore",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4"
+  }
+}
