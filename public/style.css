@@ -11,3 +11,11 @@ body, html {
   padding: 0;
   overflow: hidden;
 }
+
+label{
+  padding-right: 15px;
+  color: white;
+}
+#colorWell{
+  width: 200px;
+}
