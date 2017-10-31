@@ -1,3 +1,4 @@
+var color = '#ff0000';
 document.addEventListener("DOMContentLoaded", function() {
   var mouse = {
     click: false,
@@ -8,16 +9,24 @@ document.addEventListener("DOMContentLoaded", function() {
     },
     pos_prev: false
   };
-  // get canvas element and create context
-  var canvas = document.getElementById('drawing');
+
+
+  var canvas = document.querySelector('canvas');
   var context = canvas.getContext('2d');
+  //var nav = document.querySelector('nav');
+  const rect = canvas.getBoundingClientRect();
+
   var width = window.innerWidth;
   var height = window.innerHeight;
+
+  console.log(height);
   var socket = io.connect();
 
   // set canvas to full browser width/height
   canvas.width = width;
   canvas.height = height;
+
+
 
   // register mouse event handlers
   canvas.onmousedown = function(e) {
@@ -30,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
   canvas.onmousemove = function(e) {
     // normalize mouse position to range 0.0 - 1.0
     mouse.pos.x = e.clientX / width;
-    mouse.pos.y = e.clientY / height;
+    mouse.pos.y = (e.clientY - rect.top) / height;
     mouse.move = true;
   };
 
@@ -40,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
     context.beginPath();
     context.moveTo(line[0].x * width, line[0].y * height);
     context.lineTo(line[1].x * width, line[1].y * height);
-    context.strokeStyle = '#ff0000';
+    context.strokeStyle = color;
     context.stroke();
   });
 
@@ -62,3 +71,18 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   mainLoop();
 });
+
+window.addEventListener("load", startup, false);
+
+function startup() {
+  colorWell = document.querySelector("#colorWell");
+  colorWell.value = color;
+  colorWell.addEventListener("input", updateFirst, false);
+
+  colorWell.select();
+}
+
+function updateFirst(event) {
+  color = event.target.value;
+
+}
