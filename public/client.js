@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   var canvas = document.querySelector('canvas');
   var context = canvas.getContext('2d');
-  //var nav = document.querySelector('nav');
   const rect = canvas.getBoundingClientRect();
 
   var width = window.innerWidth;
@@ -46,11 +45,12 @@ document.addEventListener("DOMContentLoaded", function() {
   // draw line received from server
   socket.on('draw_line', function(data) {
     var line = data.line;
+    context.strokeStyle = data.color;
     context.beginPath();
     context.moveTo(line[0].x * width, line[0].y * height);
     context.lineTo(line[1].x * width, line[1].y * height);
-    context.strokeStyle = color;
     context.stroke();
+    context.strokeStyle = color;
   });
 
   // main loop, running every 25ms
@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (mouse.click && mouse.move && mouse.pos_prev) {
       // send line to to the server
       socket.emit('draw_line', {
+        color: color,
         line: [mouse.pos, mouse.pos_prev]
       });
       mouse.move = false;
@@ -71,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   mainLoop();
 });
-
+// Color Tool
 window.addEventListener("load", startup, false);
 
 function startup() {

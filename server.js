@@ -18,12 +18,13 @@ io.on('connection', function(socket) {
       line: line_history[i]
     });
   }
-  // add handler for message type "draw_line".
+
   socket.on('draw_line', function(data) {
     // add received line to history
     line_history.push(data.line);
-    // send line to all clients
+
     io.emit('draw_line', {
+      color: data.color,
       line: data.line
     });
   });
